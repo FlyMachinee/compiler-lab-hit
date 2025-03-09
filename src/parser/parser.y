@@ -150,6 +150,10 @@ ExtDecList: VarDec              { $$ = make_pt_node("ExtDecList", @1.first_line,
                                         make_pt_token(YYerror), $2, $3
                                     ); 
                                 }
+    | error                     { $$ = make_pt_node("ExtDecList", @1.first_line, 1, 
+                                        make_pt_token(YYerror)
+                                    ); 
+                                }
     ;
 
 
