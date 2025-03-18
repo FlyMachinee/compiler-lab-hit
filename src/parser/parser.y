@@ -18,8 +18,6 @@
 
     extern char error_printed[256];
 
-    extern char has_semantic_error;
-
     void yyerror(const char *msg);
 
     char has_syntax_error = 0;

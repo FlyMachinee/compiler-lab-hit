@@ -15,7 +15,7 @@
         yycolumn += yyleng; \
         yylloc.last_column = yycolumn - 1;
     
-    char has_semantic_error = 0;
+    char has_lexical_error = 0;
 
     pt_semantic_val_t pt_sval;
 %}
@@ -121,7 +121,7 @@ error_float {error_float_1}|{error_float_2}|{error_float_3}|{error_float_4}
         error_printed[yylineno] = 1;
     }
 
-    has_semantic_error = 1;
+    has_lexical_error = 1;
     pt_sval.int_val = 0;
     yylval.pnode = make_pt_token_val(INT, pt_sval);
     return INT;
@@ -133,7 +133,7 @@ error_float {error_float_1}|{error_float_2}|{error_float_3}|{error_float_4}
         error_printed[yylineno] = 1;
     }
 
-    has_semantic_error = 1;
+    has_lexical_error = 1;
     pt_sval.int_val = 0;
     yylval.pnode = make_pt_token_val(INT, pt_sval);
     return INT;
@@ -145,7 +145,7 @@ error_float {error_float_1}|{error_float_2}|{error_float_3}|{error_float_4}
         error_printed[yylineno] = 1;
     }
 
-    has_semantic_error = 1;
+    has_lexical_error = 1;
     pt_sval.int_val = 0;
     yylval.pnode = make_pt_token_val(INT, pt_sval);
     return INT;
@@ -157,7 +157,7 @@ error_float {error_float_1}|{error_float_2}|{error_float_3}|{error_float_4}
         error_printed[yylineno] = 1;
     }
 
-    has_semantic_error = 1;
+    has_lexical_error = 1;
     pt_sval.float_val = 0.0;
     yylval.pnode = make_pt_token_val(FLOAT, pt_sval);
     return FLOAT;
@@ -396,7 +396,7 @@ error_float {error_float_1}|{error_float_2}|{error_float_3}|{error_float_4}
         error_printed[yylineno] = 1;
     }
 
-    has_semantic_error = 1;
+    has_lexical_error = 1;
 }
 
 %%
