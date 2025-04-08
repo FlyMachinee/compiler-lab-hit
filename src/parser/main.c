@@ -28,6 +28,7 @@ int main(int argc, char **argv)
     yyparse();
 
     if (has_lexical_error || has_syntax_error) {
+        free_pt(parse_tree);
         return 1;
     } else {
         print_pt(parse_tree);

@@ -25,6 +25,7 @@
 
 %locations
 %define parse.error verbose
+%expect 2
 
 %union {
     pt_node_t *pnode;
@@ -124,8 +125,6 @@
 Program: ExtDefList {
                         $$ = NULL;
                         parse_tree = make_pt_node("Program", @1.first_line, 1, $1);
-                        // print_pt(parse_tree); 
-                        // printf("%p->%p\n", &parse_tree, parse_tree);
                     }
     ;
 

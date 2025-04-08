@@ -6,6 +6,7 @@
 
 PARSER='./bin/parser'
 MAKEFILE='./Makefile'
+# TEST_DIR='./test/'
 TEST_DIR='./Tests (normal)/inputs/'
 EXPECTED_DIR='./Tests (normal)/expects/'
 
@@ -13,11 +14,6 @@ TMP_FILE="tmp.txt"
 
 if [ ! -d "$TEST_DIR" ]; then
     echo "Test directory \"$TEST_DIR\" not found, please check the path."
-    exit 1
-fi
-
-if [ ! -d "$EXPECTED_DIR" ]; then
-    echo "Expected directory \"$EXPECTED_DIR\" not found, please check the path."
     exit 1
 fi
 
