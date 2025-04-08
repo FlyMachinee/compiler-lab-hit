@@ -1,6 +1,4 @@
-compiler-lab-hit
-
----
+# compiler-lab-hit
 
 哈尔滨工业大学 2025春 编译原理 课程实验
 
