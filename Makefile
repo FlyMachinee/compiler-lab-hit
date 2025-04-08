@@ -20,7 +20,7 @@ BISON = bison
 
 INCLUDES = -I$(BUILD_DIR) -I$(INCLUDE_DIR)
 
-.PHONY: all clean debug test
+.PHONY: all clean test
 
 all: $(TARGET)
 
@@ -29,45 +29,49 @@ test:
 	@echo $(OBJS)
 	@echo $(DEPS)
 
-debug: $(DEBUG_TARGET)
-
 clean:
 	rm -r -f $(BUILD_DIR)/* $(BIN_DIR)/*
 
-$(TARGET): $(OBJS)
+$(BUILD_DIR):
+	mkdir -p $@
+
+$(BIN_DIR):
+	mkdir -p $@
+
+$(TARGET): $(OBJS) | $(BIN_DIR)
 	$(CC) -o $@ $^
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
 	$(CC) $(CCFLAGS) -c -o $@ $< $(INCLUDES)
 
-$(BUILD_DIR)/scanner.o: $(BUILD_DIR)/scanner.cpp
+$(BUILD_DIR)/scanner.o: $(BUILD_DIR)/scanner.cpp | $(BUILD_DIR)
 	$(CC) $(CCFLAGS) -c -o $@ $< $(INCLUDES)
 
-$(BUILD_DIR)/parser.o: $(BUILD_DIR)/parser.cpp
+$(BUILD_DIR)/parser.o: $(BUILD_DIR)/parser.cpp | $(BUILD_DIR)
 	$(CC) $(CCFLAGS) -c -o $@ $< $(INCLUDES)
 
-$(BUILD_DIR)/%.d: $(SRC_DIR)/%.cpp
+$(BUILD_DIR)/%.d: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
 	@set -e; rm -f $@; \
 	$(CC) -MM $< $(INCLUDES) > $@.$$$$; \
 	sed 's,\($*\)\.o[ :]*,$(BUILD_DIR)/\1.o $@ : ,g' < $@.$$$$ > $@; \
 	rm -f $@.$$$$
 
-$(BUILD_DIR)/scanner.d: $(BUILD_DIR)/scanner.cpp
+$(BUILD_DIR)/scanner.d: $(BUILD_DIR)/scanner.cpp | $(BUILD_DIR)
 	@set -e; rm -f $@; \
 	$(CC) -MM $< $(INCLUDES) > $@.$$$$; \
 	sed 's,\(.*\)\.o[ :]*,$(BUILD_DIR)/\1.o $@ : ,g' < $@.$$$$ > $@; \
 	rm -f $@.$$$$
 
-$(BUILD_DIR)/parser.d: $(BUILD_DIR)/parser.cpp
+$(BUILD_DIR)/parser.d: $(BUILD_DIR)/parser.cpp | $(BUILD_DIR)
 	@set -e; rm -f $@; \
 	$(CC) -MM $< $(INCLUDES) > $@.$$$$; \
 	sed 's,\(.*\)\.o[ :]*,$(BUILD_DIR)/\1.o $@ : ,g' < $@.$$$$ > $@; \
 	rm -f $@.$$$$
 
-$(BUILD_DIR)/scanner.cpp: $(SRC_DIR)/scanner.l
+$(BUILD_DIR)/scanner.cpp: $(SRC_DIR)/scanner.l | $(BUILD_DIR)
 	$(FLEX) -+ -o $@ $<
 
-$(BUILD_DIR)/parser.cpp $(BUILD_DIR)/parser.hpp $(BUILD_DIR)/location.hh: $(SRC_DIR)/parser.y
+$(BUILD_DIR)/parser.cpp $(BUILD_DIR)/parser.hpp $(BUILD_DIR)/location.hh: $(SRC_DIR)/parser.y | $(BUILD_DIR)
 	$(BISON) -o $(BUILD_DIR)/parser.cpp $<
 
 -include $(DEPS)
