@@ -4,3 +4,6 @@
 [submodule "compiler-lab1.5-hit"]
 	path = compiler-lab1.5-hit
 	url = https://github.com/FlyMachinee/compiler-lab1.5-hit.git
+[submodule "compiler-lab2-hit"]
+	path = compiler-lab2-hit
+	url = https://github.com/FlyMachinee/compiler-lab2-hit.git
